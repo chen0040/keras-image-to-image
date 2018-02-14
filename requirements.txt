@@ -7,3 +7,4 @@ scipy
 h5py
 matplotlib
 pillow
+lru-dict

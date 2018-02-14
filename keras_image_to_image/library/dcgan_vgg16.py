@@ -13,6 +13,7 @@ from keras import backend as K
 import numpy as np
 from PIL import Image
 import os
+from lru import LRU
 
 
 class DCGanWithVGG16(object):
@@ -30,6 +31,7 @@ class DCGanWithVGG16(object):
         self.img_input_dim = 1000
         self.config = None
         self.vgg16_model = None
+        self.cache = LRU(1000)
 
     @staticmethod
     def get_config_file_path(model_dir_path):
@@ -198,10 +200,15 @@ class DCGanWithVGG16(object):
         self.discriminator.save_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'discriminator'), True)
 
     def encode_src_image(self, src_img_path):
-        img_input = img_to_array(load_img(src_img_path, target_size=(224, 224)))
-        img_input = np.expand_dims(img_input, axis=0)
-        img_input = preprocess_input(img_input)
-        return self.vgg16_model.predict(img_input).ravel()
+        if src_img_path in self.cache:
+            return self.cache[src_img_path]
+        else:
+            img_input = img_to_array(load_img(src_img_path, target_size=(224, 224)))
+            img_input = np.expand_dims(img_input, axis=0)
+            img_input = preprocess_input(img_input)
+            img_input = self.vgg16_model.predict(img_input).ravel()
+            self.cache[src_img_path] = img_input
+            return img_input
 
     def generate_image_from_image_file(self, src_image_path):
         noise = np.zeros(shape=(1, self.random_input_dim))
