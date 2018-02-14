@@ -10,6 +10,8 @@ __pycache__/
 *.iml
 target/
 
+Thumbs.db
+
 # Distribution / packaging
 .Python
 env/
