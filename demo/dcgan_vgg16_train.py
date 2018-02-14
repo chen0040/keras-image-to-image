@@ -1,5 +1,5 @@
 from keras_image_to_image.library.dcgan_vgg16 import DCGanWithVGG16
-from keras_image_to_image.library.utility.img_cap_loader import load_image_path_pairs
+from keras_image_to_image.library.utility.img_directory_loader import load_image_path_pairs
 import numpy as np
 from random import shuffle
 
