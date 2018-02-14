@@ -203,10 +203,10 @@ class DCGanWithVGG16(object):
         img_input = preprocess_input(img_input)
         return self.vgg16_model.predict(img_input).ravel()
 
-    def generate_image_from_text(self, text):
+    def generate_image_from_image_file(self, src_image_path):
         noise = np.zeros(shape=(1, self.random_input_dim))
         encoded_text = np.zeros(shape=(1, self.img_input_dim))
-        encoded_text[0, :] = self.glove_model.encode_doc(text)
+        encoded_text[0, :] = self.encode_src_image(src_image_path)
         noise[0, :] = np.random.uniform(-1, 1, self.random_input_dim)
         generated_images = self.generator.predict([noise, encoded_text], verbose=0)
         generated_image = generated_images[0]
