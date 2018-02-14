@@ -1,9 +1,8 @@
 import os
 import numpy as np
-from keras.preprocessing.image import img_to_array, load_img
 
 
-def load_image_path_pairs(src_img_dir_path, dest_img_dir_path, img_width, img_height):
+def load_image_path_pairs(src_img_dir_path, dest_img_dir_path):
 
     src_images = dict()
     dest_images = dict()
