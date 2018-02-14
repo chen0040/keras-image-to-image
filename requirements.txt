@@ -7,4 +7,3 @@ scipy
 h5py
 matplotlib
 pillow
-gensim
