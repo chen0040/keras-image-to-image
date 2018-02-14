@@ -63,7 +63,6 @@ Below is the [sample codes](demo/dcgan_vgg16_generate.py) on how to load the tra
 import PIL
 
 from keras_image_to_image.library.dcgan_vgg16 import DCGanWithVGG16
-from keras_image_to_image.library.utility.image_utils import img_from_normalized_img
 from keras_image_to_image.library.utility.img_directory_loader import load_image_path_pairs
 import numpy as np
 from random import shuffle
