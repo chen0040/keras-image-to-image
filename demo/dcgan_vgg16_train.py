@@ -28,7 +28,7 @@ def main():
     gan.random_input_dim = 100
 
     batch_size = 16
-    epochs = 5000
+    epochs = 2000
     gan.fit(model_dir_path=model_dir_path, image_path_pairs=image_path_pairs,
             snapshot_dir_path='./data/snapshots',
             snapshot_interval=500,
