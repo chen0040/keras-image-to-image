@@ -7,7 +7,7 @@ Transform one image to another image in Keras using GAN
 The sample codes below only generate very small images, but the image size can be increased if you have sufficient
 memory 
 
-### Text-to-Image using GloVe and Deep Convolution GAN
+### Image-to-Image using VGG16 and Deep Convolution GAN
 
 Below is the [sample codes](demo/dcgan_vgg16_train.py) to train the DCGan on a set of pokemon samples of image pair 
 (src_image_path, dest_image_path)
@@ -92,7 +92,7 @@ def main():
         src_image_path = image_path_pair[0]
         dest_image_path = image_path_pair[1]
 
-        image = Image.open(dest_image_path).img.resize((img_width, img_height), PIL.Image.ANTIALIAS)
+        image = Image.open(dest_image_path).resize((img_width, img_height), PIL.Image.ANTIALIAS)
         image.save('./data/outputs/' + DCGanWithVGG16.model_name + '-generated-' + str(i) + '-0.png')
         for j in range(3):
             generated_image = gan.generate_image_from_image_file(src_image_path)

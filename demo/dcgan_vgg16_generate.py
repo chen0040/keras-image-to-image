@@ -30,7 +30,7 @@ def main():
         src_image_path = image_path_pair[0]
         dest_image_path = image_path_pair[1]
 
-        image = Image.open(dest_image_path).img.resize((img_width, img_height), PIL.Image.ANTIALIAS)
+        image = Image.open(dest_image_path).resize((img_width, img_height), PIL.Image.ANTIALIAS)
         image.save('./data/outputs/' + DCGanWithVGG16.model_name + '-generated-' + str(i) + '-0.png')
         for j in range(3):
             generated_image = gan.generate_image_from_image_file(src_image_path)
