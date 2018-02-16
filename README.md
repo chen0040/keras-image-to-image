@@ -40,13 +40,13 @@ def main():
     gan.img_width = img_width
     gan.img_height = img_height
     gan.img_channels = img_channels
-    gan.random_input_dim = 200
+    gan.random_input_dim = 100
 
     batch_size = 16
-    epochs = 1000
+    epochs = 2000
     gan.fit(model_dir_path=model_dir_path, image_path_pairs=image_path_pairs,
             snapshot_dir_path='./data/snapshots',
-            snapshot_interval=100,
+            snapshot_interval=500,
             batch_size=batch_size,
             epochs=epochs)
 
