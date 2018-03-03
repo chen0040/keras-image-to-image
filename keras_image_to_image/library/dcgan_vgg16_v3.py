@@ -16,8 +16,8 @@ import os
 from lru import LRU
 
 
-class DCGanWithVGG16(object):
-    model_name = 'dc-gan'
+class DCGanWithVGG16V3(object):
+    model_name = 'dc-gan-v3'
 
     def __init__(self):
         K.set_image_dim_ordering('tf')
@@ -35,11 +35,11 @@ class DCGanWithVGG16(object):
 
     @staticmethod
     def get_config_file_path(model_dir_path):
-        return os.path.join(model_dir_path, DCGanWithVGG16.model_name + '-config.npy')
+        return os.path.join(model_dir_path, DCGanWithVGG16V3.model_name + '-config.npy')
 
     @staticmethod
     def get_weight_file_path(model_dir_path, model_type):
-        return os.path.join(model_dir_path, DCGanWithVGG16.model_name + '-' + model_type + '-weights.h5')
+        return os.path.join(model_dir_path, DCGanWithVGG16V3.model_name + '-' + model_type + '-weights.h5')
 
     def create_model(self):
         init_img_width = self.img_width // 4
@@ -47,7 +47,7 @@ class DCGanWithVGG16(object):
 
         random_input = Input(shape=(self.random_input_dim,))
         img_input1 = Input(shape=(self.img_input_dim,))
-        random_dense = Dense(1024)(random_input)
+        random_dense = Dense(self.random_input_dim)(random_input)
         vgg16_layer1 = Dense(1024)(img_input1)
 
         merged = concatenate([random_dense, vgg16_layer1])
@@ -113,15 +113,15 @@ class DCGanWithVGG16(object):
             self.vgg16_model.compile(optimizer=SGD(), loss='categorical_crossentropy', metrics=['accuracy'])
 
     def load_model(self, model_dir_path):
-        config_file_path = DCGanWithVGG16.get_config_file_path(model_dir_path)
+        config_file_path = DCGanWithVGG16V3.get_config_file_path(model_dir_path)
         self.config = np.load(config_file_path).item()
         self.img_width = self.config['img_width']
         self.img_height = self.config['img_height']
         self.img_channels = self.config['img_channels']
         self.random_input_dim = self.config['random_input_dim']
         self.create_model()
-        self.generator.load_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'generator'))
-        self.discriminator.load_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'discriminator'))
+        self.generator.load_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'generator'))
+        self.discriminator.load_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'discriminator'))
 
     def fit(self, model_dir_path, image_path_pairs, epochs=None, batch_size=None, snapshot_dir_path=None,
             snapshot_interval=None):
@@ -140,7 +140,7 @@ class DCGanWithVGG16(object):
         self.config['random_input_dim'] = self.random_input_dim
         self.config['img_channels'] = self.img_channels
 
-        config_file_path = DCGanWithVGG16.get_config_file_path(model_dir_path)
+        config_file_path = DCGanWithVGG16V3.get_config_file_path(model_dir_path)
 
         np.save(config_file_path, self.config)
         noise = np.zeros((batch_size, self.random_input_dim))
@@ -193,11 +193,11 @@ class DCGanWithVGG16(object):
 
                 print("Epoch %d batch %d g_loss : %f" % (epoch, batch_index, g_loss))
                 if (epoch * batch_size + batch_index) % 10 == 9:
-                    self.generator.save_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'generator'), True)
-                    self.discriminator.save_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'discriminator'), True)
+                    self.generator.save_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'generator'), True)
+                    self.discriminator.save_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'discriminator'), True)
 
-        self.generator.save_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'generator'), True)
-        self.discriminator.save_weights(DCGanWithVGG16.get_weight_file_path(model_dir_path, 'discriminator'), True)
+        self.generator.save_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'generator'), True)
+        self.discriminator.save_weights(DCGanWithVGG16V3.get_weight_file_path(model_dir_path, 'discriminator'), True)
 
     def encode_src_image(self, src_img_path):
         if src_img_path in self.cache:
@@ -223,4 +223,4 @@ class DCGanWithVGG16(object):
     def save_snapshots(self, generated_images, snapshot_dir_path, epoch, batch_index):
         image = combine_normalized_images(generated_images)
         img_from_normalized_img(image).save(
-            os.path.join(snapshot_dir_path, DCGanWithVGG16.model_name + '-' + str(epoch) + "-" + str(batch_index) + ".png"))
+            os.path.join(snapshot_dir_path, DCGanWithVGG16V3.model_name + '-' + str(epoch) + "-" + str(batch_index) + ".png"))

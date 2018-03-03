@@ -6,6 +6,7 @@ import numpy as np
 from random import shuffle
 from PIL import Image
 
+
 def main():
     seed = 42
 

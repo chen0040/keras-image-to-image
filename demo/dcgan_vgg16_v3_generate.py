@@ -1,6 +1,6 @@
 import PIL
 
-from keras_image_to_image.library.dcgan_vgg16_v2 import DCGanWithVGG16V2
+from keras_image_to_image.library.dcgan_vgg16_v3 import DCGanWithVGG16V3
 from keras_image_to_image.library.utility.img_directory_loader import load_image_path_pairs
 import numpy as np
 from random import shuffle
@@ -23,7 +23,7 @@ def main():
 
     shuffle(image_label_pairs)
 
-    gan = DCGanWithVGG16V2()
+    gan = DCGanWithVGG16V3()
     gan.load_model(model_dir_path)
 
     for i in range(3):
@@ -32,10 +32,10 @@ def main():
         dest_image_path = image_path_pair[1]
 
         image = Image.open(dest_image_path).resize((img_width, img_height), PIL.Image.ANTIALIAS)
-        image.save('./data/outputs/' + DCGanWithVGG16V2.model_name + '-generated-' + str(i) + '-0.png')
+        image.save('./data/outputs/' + DCGanWithVGG16V3.model_name + '-generated-' + str(i) + '-0.png')
         for j in range(3):
             generated_image = gan.generate_image_from_image_file(src_image_path)
-            generated_image.save('./data/outputs/' + DCGanWithVGG16V2.model_name + '-generated-' + str(i) + '-' + str(j) + '.png')
+            generated_image.save('./data/outputs/' + DCGanWithVGG16V3.model_name + '-generated-' + str(i) + '-' + str(j) + '.png')
 
 
 if __name__ == '__main__':
