@@ -2,6 +2,13 @@
 
 Transform one image to another image in Keras using GAN
 
+* [dcgan_vgg16.py](keras_image_to_image/library/dcgan_vgg16.py): this version has a very noisy input with text input (half of the 
+input is pure noise while the other half is generated from VGG16 encoding of source image)
+* [dcgan_vgg16_v2.py](keras_image_to_image/library/dcgan_vgg16_v2.py): this version remove noise as input (the input is just 
+VGG16 encoding of source image)
+* [dcgan_vgg16_v3.py](keras_image_to_image/library/dcgan_vgg16_v3.py): this version add a configurable amount of noise as input 
+together with the VGG16 encoding of source image
+
 # Usage
 
 The sample codes below only generate very small images, but the image size can be increased if you have sufficient
