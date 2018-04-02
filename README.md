@@ -2,7 +2,7 @@
 
 Transform one image to another image in Keras using GAN
 
-* [dcgan_vgg16.py](keras_image_to_image/library/dcgan_vgg16.py): this version has a very noisy input with text input (half of the 
+* [dcgan_vgg16.py](keras_image_to_image/library/dcgan_vgg16.py): this version has a very noisy input with image input (half of the 
 input is pure noise while the other half is generated from VGG16 encoding of source image)
 * [dcgan_vgg16_v2.py](keras_image_to_image/library/dcgan_vgg16_v2.py): this version remove noise as input (the input is just 
 VGG16 encoding of source image)
@@ -116,6 +116,6 @@ if __name__ == '__main__':
 * Step 1: Change tensorflow to tensorflow-gpu in requirements.txt and install tensorflow-gpu
 * Step 2: Download and install the [CUDA® Toolkit 9.0](https://developer.nvidia.com/cuda-90-download-archive) (Please note that
 currently CUDA® Toolkit 9.1 is not yet supported by tensorflow, therefore you should download CUDA® Toolkit 9.0)
-* Step 3: Download and unzip the [cuDNN 7.4 for CUDA@ Toolkit 9.0](https://developer.nvidia.com/cudnn) and add the
+* Step 3: Download and unzip the [cuDNN 7.0.4 for CUDA@ Toolkit 9.0](https://developer.nvidia.com/cudnn) and add the
 bin folder of the unzipped directory to the $PATH of your Windows environment 
 
